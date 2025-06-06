@@ -1,0 +1,321 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fancy Auth Flip Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 360px;
+      height: 460px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease-in-out;
+      position: relative;
+    }
+
+    .card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 40px 30px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+    .front {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .back {
+      background: rgba(255, 255, 255, 0.07);
+      transform: rotateY(180deg);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #00ffcc, 0 0 30px #00ffcc80;
+    }
+
+    input[type="submit"]:hover {
+      background: #00e6b8;
+      box-shadow: 0 0 15px #00ffe0, 0 0 35px #00ffe080;
+    }
+
+    .flip-btn {
+      margin-top: 20px;
+      background: transparent;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-align: center;
+    }
+
+    .flip-btn:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card" id="flip-card">
+      <div class="card-inner">
+        < Sign Up -->
+        <!-- <div class="side front">
+          <h2>Sign Up</h2>
+          <form>
+            <input type="text" placeholder="Username" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="submit" value="Register" />
+          </form>
+          <div class="flip-btn" onclick="flipCard()">Already have an account?</div>
+        </div>
+
+         Log In 
+         <div class="side back">
+          <h2>Log In</h2>
+          <form>
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="submit" value="Log In" />
+          </form>
+          <div class="flip-btn" onclick="flipCard()">Don't have an account?</div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+   <script>
+    function flipCard() {
+      const card = document.getElementById('flip-card');
+      card.classList.toggle('flipped');
+    }
+  </script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Flip Auth</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #6c88bd, #2a5298);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      perspective: 1500px;
+    }
+
+    .card {
+      width: 380px;
+      height: 480px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease-in-out;
+      border-radius: 30px;
+    }
+
+    .card:hover {
+      transform: rotateY(0deg) rotateX(3deg) scale(1.01);
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+      transform-style: preserve-3d;
+      border-radius: 30px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+    }
+
+    .side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(12px);
+      border-radius: 30px;
+      color: #fff;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 14px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background: #00f0ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 12px #00f0ff, 0 0 30px #00f0ff80;
+    }
+
+    input[type="submit"]:hover {
+      background: #00d9e6;
+      box-shadow: 0 0 16px #00e6ff, 0 0 36px #00e6ff80;
+    }
+
+    .flip-btn {
+      margin-top: 25px;
+      background: transparent;
+      border: 1px solid #00f0ff;
+      color: #00f0ff;
+      padding: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .flip-btn:hover {
+      background: #00f0ff;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card" id="flip-card">
+      <div class="card-inner">
+        <!-- Sign Up -->
+        <div class="side front">
+          <h2>Sign Up</h2>
+          <form>
+            <input type="text" placeholder="Username" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="submit" value="Register" />
+          </form>
+          <div class="flip-btn" onclick="flipCard()">Already have an account?</div>
+        </div>
+
+        <!-- Log In -->
+        <div class="side back">
+          <h2>Log In</h2>
+          <form>
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="submit" value="Log In" />
+          </form>
+          <div class="flip-btn" onclick="flipCard()">Don't have an account?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function flipCard() {
+      const card = document.getElementById('flip-card');
+      card.classList.toggle('flipped');
+    }
+  </script>
+
+</body>
+</html>
+
