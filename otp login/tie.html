@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipal Complaint Management System</title>
+    <link rel="stylesheet" href="tie.css">
+</head>
+<body>
+    <header>
+        <h1>Municipal Complaint Management System</h1>
+    </header>
+    
+    <main>
+        <section class="report-section">
+            <h2>Report an Issue</h2>
+            <form id="complaintForm">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="issue">Issue Type:</label>
+                <select id="issue" name="issue" required>
+                    <option value="pothole">Pothole</option>
+                    <option value="streetlight">Broken Streetlight</option>
+                    <option value="garbage">Garbage Collection</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" placeholder="Describe the issue" required></textarea>
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="Enter the location" required>
+
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </section>
+
+        <section class="track-section">
+            <h2>Track Your Complaint</h2>
+            <form id="trackForm">
+                <label for="complaintId">Complaint ID:</label>
+                <input type="text" id="complaintId" name="complaintId" placeholder="Enter your complaint ID" required>
+                <button type="submit">Track Complaint</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Municipal Complaint Management System</p>
+    </footer>
+</body>
+</html>
