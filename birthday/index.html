@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff80ab, #ff99cc, #ffccff);
+      background-size: 300% 300%;
+      animation: gradientAnimation 5s ease infinite;
+      font-family: 'Chewy', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Typing Effect for Happy Birthday text */
+    h1 {
+
+      font-size: 60px;
+      margin-bottom: 30px;
+      opacity: 30;
+      width: 40; /* Start with no width to simulate typing effect */
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 4px solid #fff; /* Creates a cursor effect */
+      animation: typingEffect 4s steps(20) forwards;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 50px;
+      opacity: 0;
+      animation: textAppear 5s forwards 3s;
+    }
+
+    /* Text appearing animation */
+    @keyframes textAppear {
+      0% { opacity: 20; transform: translateY(30px); }
+      100% { opacity: 10; transform: translateY(0); }
+    }
+
+    @keyframes typingEffect {
+      0% { width: 2; }
+      100% { width: 100%; }
+    }
+
+    .birthday-cake {
+      width: 300px;
+      height: 300px;
+      background-image: url('IMG_9142.JPG');
+      background-size: cover;
+      border-radius: 20px;
+      margin-bottom: 50px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 1s, transform 1s;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      animation: floatBalloons 10s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .balloon img {
+      width: 80px;
+      margin: 0 15px;
+    }
+
+    @keyframes floatBalloons {
+      0% { bottom: -100px; opacity: 0.8; transform: translateX(0) scale(0.7); }
+      50% { bottom: 40%; opacity: 1; transform: translateX(50px) scale(1.2); }
+      100% { bottom: 100vh; opacity: 0.8; transform: translateX(-50px) scale(0.7); }
+    }
+
+    .button {
+      background-color: #ff9cda;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #ff80e3;
+      transform: scale(1.1);
+    }
+
+    .corner-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #ff80e3;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .corner-button:hover {
+      transform: scale(1.1);
+      background-color: #ff9cda;
+    }
+
+    #wishes {
+      display: none;
+      font-size: 22px;
+      color: #ffdd6e;
+      animation: fadeIn 2s ease-in-out 1s forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .message-container {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      color: #333;
+    }
+
+    .message-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 15px;
+      border: 1px solid #ff80e3;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    .message-container button {
+      background-color: #ff80e3;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .message-container button:hover {
+      background-color: #ff9cda;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Balloons Floating -->
+  <div class="balloon" style="left: 10%"><img src="kindpng_907013.png" alt="Balloon"></div>
+  <div class="balloon" style="left: 30%"><img src="kindpng_16303.png" alt="Balloon"></div>
+  <div class="balloon" style="left: 50%"><img src="kindpng_40714.png" alt="Balloon"></div>
+  <div class="balloon" style="left: 70%"><img src="kindpng_16303.png" alt="Balloon"></div>
+  <div class="balloon" style="left: 90%"><img src="kindpng_40714.png" alt="Balloon"></div>
+
+  <h1 id="happyBirthday"> 🎉 Happy Birthday  SUWINSA🎉</h1>
+  <h2>Wishing you all the best on your special day! 🎂</h2>
+
+  <div class="birthday-cake" id="cake"></div>
+
+  <button class="button" onclick="revealWishes()">🎁 Get Your Gift</button>
+
+  <div id="wishes">
+    <p>May your day be filled with love, joy, and happiness. 💖</p>
+    <p>Wishing you all your heart desires today and always. 🎉</p>
+  </div>
+
+  <button class="button" onclick="showMessageInput()">✍️ CLICK HERE</button>
+
+  <div class="message-container" id="messageBox">
+    <input type="text" id="userMessage" placeholder="Always better together my friend" />
+    <button onclick="submitMessage()">HBD</button>
+  </div>
+
+  <button class="corner-button" onclick="window.location.reload()">🔄 Reload Page</button>
+
+  <script>
+    function revealWishes() {
+      document.getElementById('wishes').style.display = 'block';
+      document.querySelector('#cake').style.opacity = 1;
+      document.querySelector('#cake').style.transform = 'scale(1)';
+      document.getElementById('happyBirthday').style.animation = 'typingEffect 4s steps(20) forwards';
+    }
+
+    function showMessageInput() {
+      document.getElementById('messageBox').style.display = 'block';
+    }
+
+    function submitMessage() {
+      let userMessage = document.getElementById('userMessage').value;
+      if (userMessage) {
+        alert("Your message: " + userMessage + " has been sent!");
+        document.getElementById('userMessage').value = '';
+        document.getElementById('messageBox').style.display = 'none';
+      } else {
+        alert("Please write a message first!");
+      }
+    }
+  </script>
+
+</body>
+</html>
