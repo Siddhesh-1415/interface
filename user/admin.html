@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="user1.css">
+    <title>website</title>
+</head>
+<body background="bg.jpg">
+    <!-- Sign Up Form -->
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form id="sign-up-form">
+            <div class="form-group">
+                <input type="email" id="email" name="email" required>
+                <label for="email">EMAIL</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" required>
+                <label for="password">PASSWORD</label>
+            </div>
+            <input id="btn" type="submit" value="Sign Up">
+        </form>
+    </div>
+    
+    <h2 class="college">FeastFinder</h2>
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEErQqOjzahPszbQPW0vttLulpnFK3jos",
+            authDomain: "restaurant-b1c3f.firebaseapp.com",
+            projectId: "restaurant-b1c3f",
+            storageBucket: "restaurant-b1c3f.appspot.com",
+            messagingSenderId: "599536908274",
+            appId: "1:599536908274:web:cb4ce99c6cdd58e4151d6b",
+            measurementId: "G-ZTY33CJTEW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const signUpForm = document.getElementById('sign-up-form');
+
+        // Add an event listener to the form for inserting data
+        signUpForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the values from the form inputs
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Log the captured values
+            console.log('Email:', email);
+            console.log('Password:', password);
+
+            // Create the user data object
+            const userData = {
+                email: email,
+                password: password
+            };
+
+            // Insert the user data into Firestore
+            await insertUser(userData);
+        });
+
+        // Insert a new user
+        async function insertUser(userData) {
+            try {
+                const docRef = await addDoc(collection(db, 'users'), userData);
+                console.log('User document written with ID:', docRef.id);
+            } catch (error) {
+                console.error('Error adding user document:', error.message);
+                console.error('Error details:', error);
+            }
+        }
+    </script>
+</body>
+</html>

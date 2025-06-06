@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Booking</title>
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book Your Table</h1>
+        <div id="booking-section">
+            <!-- Booking block -->
+            <div class="booking">
+                <div class="details">
+                    <h3>Reserve your spot for a delightful dining experience!!</h3>
+                    <form id="booking-form">
+                        <!-- Date Selection -->
+                        <div class="form-group">
+                            <label for="booking-date">Date:</label>
+                            <input type="text" id="booking-date" name="booking-date" required>
+                        </div>
+                        <!-- Time Selection -->
+                        <div class="form-group">
+                            <label for="booking-time">Time:</label>
+                            <input type="text" id="booking-time" name="booking-time" required>
+                        </div>
+                        <!-- Guests Selection -->
+                        <div class="form-group">
+                            <label for="guests">People:</label>
+                            <input type="number" id="guests" name="guests" min="1" max="20" placeholder="Number of People" required>
+                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEErQqOjzahPszbQPW0vttLulpnFK3jos",
+            authDomain: "restaurant-b1c3f.firebaseapp.com",
+            projectId: "restaurant-b1c3f",
+            storageBucket: "restaurant-b1c3f.appspot.com",
+            messagingSenderId: "599536908274",
+            appId: "1:599536908274:web:cb4ce99c6cdd58e4151d6b",
+            measurementId: "G-ZTY33CJTEW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const bookingForm = document.getElementById('booking-form');
+
+        // Add an event listener to the form for inserting data
+        bookingForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the values from the form inputs
+            const bookingDate = document.getElementById('booking-date').value;
+            const bookingTime = document.getElementById('booking-time').value;
+            const guests = parseInt(document.getElementById('guests').value);
+
+            // Log the captured values
+            console.log('Booking Date:', bookingDate);
+            console.log('Booking Time:', bookingTime);
+            console.log('Guests:', guests);
+
+            // Create the booking data object
+            const bookingData = {
+                bookingDate: bookingDate,
+                bookingTime: bookingTime,
+                guests: guests
+            };
+
+            // Insert the booking data into Firestore
+            await insertBooking(bookingData);
+        });
+
+        // Insert a new booking
+        async function insertBooking(bookingData) {
+            try {
+                const docRef = await addDoc(collection(db, 'bookings'), bookingData);
+                console.log('Booking document written with ID:', docRef.id);
+            } catch (error) {
+                console.error('Error adding booking document:', error.message);
+                console.error('Error details:', error);
+            }
+        }
+
+        // Retrieve all bookings
+        async function retrieveAllBookings() {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'bookings'));
+                querySnapshot.forEach((doc) => {
+                    console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+                });
+            } catch (error) {
+                console.error('Error retrieving bookings:', error.message);
+                console.error('Error details:', error);
+            }
+        }
+
+        // Test function to insert a booking
+        async function testInsertBooking() {
+            const testBooking = {
+                bookingDate: '2025-01-26',
+                bookingTime: '19:00',
+                guests: 4
+            };
+            await insertBooking(testBooking);
+        }
+
+        // Uncomment the following line to test the insert function
+         testInsertBooking();
+
+        // Usage Example
+        // Call retrieveAllBookings() to fetch and log all bookings
+        // retrieveAllBookings();
+    </script>
+</body>
+</html>
