@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
+    <title>website</title>
+    <img src="logo.jpg.png" class="logo">
+
+</head>
+<body background="bg.jpg">
+    <h5 class="muncipal">MUNICIPAL COMPLAINT MANAGEMENT SYSTEM </h5>
+
+    <!-- Sign Up Form -->
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form id="sign-up-form">
+            <div class="form-group">
+                <input type="email" id="email" name="email" required>
+                <label for="email">EMAIL</label>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" required>
+                <label for="password">PASSWORD</label>
+            </div>
+            <input class="btn" id="btn" type="submit" value="Sign Up">
+        </form>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Municipal Corporation of MUMBAI</p>
+        <p >For assistance, contact us at: <a href="mailto:support@municipalcorp.com">support@municipalcorp.com</a></p>
+        <p>Visit our official website: <a href="http://www.municipalcorp.com" target="_blank">www.municipalcorp.com</a></p>
+    </footer>
+    
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getFirestore, collection, doc, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAAqMSz_FqAzXy4_xJk6qQklhbcJQNakPk",
+        authDomain: "codecrew-e515f.firebaseapp.com",
+        projectId: "codecrew-e515f",
+        storageBucket: "codecrew-e515f.firebasestorage.app",
+        messagingSenderId: "682550538371",
+        appId: "1:682550538371:web:1636291cafb120e2c96bb6",
+        measurementId: "G-SC59M99Q5D"
+        };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const signUpForm = document.getElementById('sign-up-form');
+
+    // Add an event listener to the form for inserting data
+    signUpForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get the values from the form inputs
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Log the captured values
+        console.log('Email:', email);
+        console.log('Password:', password);
+
+        try {
+            // Create a user in Firebase Authentication
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('User signed up with UID:', userCredential.user.uid);
+
+            // Create the user data object
+            const userData = {
+                uid: userCredential.user.uid,
+                email: email,
+                password: password
+            };
+
+            // Insert the user data into Firestore
+            await insertUser(userData);
+        } catch (error) {
+            console.error('Error signing up user:', error.message);
+            console.error('Error details:', error);
+        }
+    });
+
+    // Insert a new user
+    async function insertUser(userData) {
+        try {
+            const docRef = await addDoc(collection(db, 'users'), userData);
+            console.log('User document written with ID:', docRef.id);
+        } catch (error) {
+            console.error('Error adding user document:', error.message);
+            console.error('Error details:', error);
+        }
+    }
+</script>
+
+    </script>
+</body>
+</html>

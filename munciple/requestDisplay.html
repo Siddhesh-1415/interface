@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="request.css">
+    <title>Complaint registration</title>
+</head>
+<body background="sprint5.jpg">
+    <div class="container">
+        <h1>Complaint Registration Details</h1>
+        <table id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone no.</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Complaint Category</th>
+                    <th>Complaint Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Complaint details will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Municipal Corporation of MUMBAI</p>
+        <p >For assistance, contact us at: <a href="mailto:support@municipalcorp.com">support@municipalcorp.com</a></p>
+        <p>Visit our official website: <a href="http://www.municipalcorp.com" target="_blank">www.municipalcorp.com</a></p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAqMSz_FqAzXy4_xJk6qQklhbcJQNakPk",
+            authDomain: "codecrew-e515f.firebaseapp.com",
+            projectId: "codecrew-e515f",
+            storageBucket: "codecrew-e515f.firebasestorage.app",
+            messagingSenderId: "682550538371",
+            appId: "1:682550538371:web:1636291cafb120e2c96bb6",
+            measurementId: "G-SC59M99Q5D"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Reference to Firestore collection
+        const complaintsCollection = db.collection('complaints');
+
+        // Retrieve complaints and display in the table
+        async function loadComplaints() {
+            const bookingTableBody = document.querySelector("#bookingTable tbody");
+            bookingTableBody.innerHTML = ''; // Clear existing rows
+
+            try {
+                const querySnapshot = await complaintsCollection.get();
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+
+                    // Create a new row for each complaint
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.name}</td>
+                        <td>${data.email}</td>
+                        <td>${data.phone}</td>
+                        <td>${data.timestamp.toDate().toLocaleTimeString()}</td>
+                        <td>${data.timestamp.toDate().toLocaleDateString()}</td>
+                        <td>${data.location}</td>
+                        <td>${data.category}</td>
+                        <td>${data.description}</td>
+                        <td>
+                            <button class="accept-button" onclick="updateComplaintStatus('${doc.id}', 'In progress')">In progress</button>
+                            <button class="reject-button" onclick="updateComplaintStatus('${doc.id}', 'Solved')">Solved</button>
+                            <button class="pending-button" onclick="updateComplaintStatus('${doc.id}', 'Pending')">Pending</button>
+                            <button class="remove-button" onclick="removeComplaint('${doc.id}')">Remove</button>
+                        </td>
+                    `;
+                    bookingTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error retrieving complaints:", error);
+            }
+        }
+
+        // Update complaint status function
+        async function updateComplaintStatus(id, status) {
+            try {
+                await complaintsCollection.doc(id).update({ status: status });
+                alert(`Complaint ${id} status updated to ${status}!`);
+                loadComplaints(); // Refresh the table
+            } catch (error) {
+                console.error(`Error updating complaint status:`, error);
+            }
+        }
+
+        // Remove complaint function
+        async function removeComplaint(id) {
+            try {
+                await complaintsCollection.doc(id).delete();
+                alert(`Complaint ${id} removed!`);
+                loadComplaints(); // Refresh the table
+            } catch (error) {
+                console.error(`Error removing complaint:`, error);
+            }
+        }
+
+        // Load complaints on page load
+        document.addEventListener("DOMContentLoaded", loadComplaints);
+    </script>
+</body>
+</html>

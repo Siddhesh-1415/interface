@@ -1,0 +1,142 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and container styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 2.5em;
+    color: #91320f;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table styling */
+#bookingTable {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders between cells collapse into a single border */
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #333; /* Adds border to the entire table */
+}
+
+#bookingTable th,
+#bookingTable td {
+    padding: 12px;
+    text-align: center;
+    font-size: 1em;
+    border: 1px solid #ddd; /* Adds border to table cells */
+}
+
+#bookingTable th {
+    background-color: #a45616;
+    color: white;
+}
+
+#bookingTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#bookingTable tr:hover {
+    background-color: #e6f7e6;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Styling */
+button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #c69a3a;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background-color: #c9a381;
+}
+
+button.accept-button {
+    background-color: #008CBA;
+}
+
+button.reject-button {
+    background-color: #12cf22;
+}
+
+button.pending-button {
+    background-color: #ff9800;
+}
+
+button.remove-button {
+    background-color: #dc1414;
+}
+
+/* Transition effect for table rows */
+tr {
+    transition: background-color 0.3s ease;
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 768px) {
+    #bookingTable th, #bookingTable td {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+}
+
+
+.footer
+{
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: #7f4d15;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1em;
+
+
+}
+footer p{
+    color:#fff
+
+}
+
+footer a
+{
+    color: #d7caa4;
+
+}

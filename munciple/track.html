@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipal Complaint Status</title>
+    <link rel="stylesheet" href="track.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Complaint Status</h1>
+        <table id="complaintTable">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone no.</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Complaint Category</th>
+                    <th>Complaint Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Complaint details will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "2Mcbax9098yekR5DAlVrLz3WC7M7cDp6",
+            authDomain: "codecrew-e515f.firebaseapp.com",
+            projectId: "codecrew-e515f",
+            storageBucket: "codecrew-e515f.firebasestorage.app",
+            messagingSenderId: "682550538371",
+            appId: "1:682550538371:web:1636291cafb120e2c96bb6",
+            measurementId: "G-SC59M99Q5D"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Reference to Firestore collection
+        const complaintsCollection = db.collection('complaints');
+
+        // Retrieve complaints and display in the table
+        async function loadComplaints() {
+            const complaintTableBody = document.querySelector("#complaintTable tbody");
+            complaintTableBody.innerHTML = ''; // Clear existing rows
+
+            try {
+                const querySnapshot = await complaintsCollection.get();
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+
+                    // Create a new row for each complaint
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.name}</td>
+                        <td>${data.email}</td>
+                        <td>${data.phone}</td>
+                        <td>${data.timestamp.toDate().toLocaleTimeString()}</td>
+                        <td>${data.timestamp.toDate().toLocaleDateString()}</td>
+                        <td>${data.location}</td>
+                        <td>${data.category}</td>
+                        <td>${data.description}</td>
+                        <td>${data.status || 'Pending'}</td>
+                    `;
+                    complaintTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error retrieving complaints:", error);
+            }
+        }
+
+        // Load complaints on page load
+        document.addEventListener("DOMContentLoaded", loadComplaints);
+    </script>
+</body>
+</html>

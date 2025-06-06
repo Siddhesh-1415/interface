@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Municipal Complaint Registration</title>
+    <link rel="stylesheet" href="suwinsa.css">
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #mapid { height: 500px; }
+        #location { margin-top: 10px; width: 100%; }
+    </style>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError, { enableHighAccuracy: true });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var map = L.map('mapid').setView([lat, lon], 18); // Higher zoom level for more accuracy
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup("You are here!")
+                .openPopup();
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        document.getElementById('location').value = data.display_name;
+                    } else {
+                        document.getElementById('location').value = "Location not found.";
+                    }
+                })
+                .catch(error => {
+                    console.log('Error fetching location name:', error);
+                    document.getElementById('location').value = "Error fetching location.";
+                });
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Call the getLocation function to ask for user location and fetch it
+        getLocation();
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAAqMSz_FqAzXy4_xJk6qQklhbcJQNakPk",
+            authDomain: "codecrew-e515f.firebaseapp.com",
+            projectId: "codecrew-e515f",
+            storageBucket: "codecrew-e515f.firebasestorage.app",
+            messagingSenderId: "682550538371",
+            appId: "1:682550538371:web:1636291cafb120e2c96bb6",
+            measurementId: "G-SC59M99Q5D"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const complaintForm = document.querySelector('form');
+
+            complaintForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); 
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const category = document.getElementById('category').value;
+                const description = document.getElementById('description').value;
+                const location = document.getElementById('location').value;
+
+                console.log('Name:', name);
+                console.log('Email:', email);
+                console.log('Phone:', phone);
+                console.log('Category:', category);
+                console.log('Description:', description);
+                console.log('Location:', location);
+
+                const complaintData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    category: category,
+                    description: description,
+                    location: location,
+                    timestamp: new Date()
+                };
+
+                try {
+                    const docRef = await addDoc(collection(db, 'complaints'), complaintData);
+                    console.log('Complaint document written with ID:', docRef.id);
+
+                    complaintForm.reset();
+                } catch (error) {
+                    console.error('Error adding complaint document:', error.message);
+                    console.error('Error details:', error);
+                }
+            });
+
+            // Logout functionality
+            const goBack = document.getElementById('goBack');
+            goBack.addEventListener('click', (e) => {
+                signOut(auth).then(() => {
+                    document.location.replace("login.html");
+                }).catch((error) => {
+                    window.alert(error);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Track</a>
+        <span id="goBack">Log Out</span>
+    </div>
+    <div class="container">
+        <h2>Municipal Complaint Registration</h2>
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+            
+            <label for="category">Complaint Category:</label>
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="road_damage">Road Damage</option>
+                <option value="garbage_collection">Garbage Collection</option>
+                <option value="water_supply">Water Supply Issue</option>
+                <option value="electricity">Electricity Problem</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <label for="description">Complaint Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="location">Location</label>
+            <div id="mapid"></div>
+            <input type="text" id="location" placeholder="Your location will appear here" readonly />
+            
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+</body>
+</html>

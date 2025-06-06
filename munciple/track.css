@@ -1,0 +1,187 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-image: linear-gradient(to bottom right, #c8e6c9, #ffebee); */
+    animation: fadeIn 1s ease-out; /* Fade-in animation for the body */
+    background-image: url(sprint5.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Container Styling */
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 80%;
+    overflow-x: auto;
+    transform: translateY(20px); /* Initial position for the animation */
+    animation: slideUp 0.5s ease-out; /* Animation to slide up the container */
+}
+
+/* Hover effect on container */
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Header Styling */
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    color: #673c20;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    font-family: 'Cambria', serif;
+    animation: textPopUp 1s ease-out; /* Animation for header text */
+}
+
+/* Table Styling */
+#complaintTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #673c20; /* Border around the table */
+    overflow: hidden;
+    animation: tablePopUp 1s ease-out; /* Animation for the table appearance */
+}
+
+/* Table Header Styling */
+#complaintTable thead {
+    background-color: #673c20;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#complaintTable th {
+    padding: 15px;
+    text-align: left;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+
+/* Table Body Styling */
+#complaintTable tbody tr {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#complaintTable tbody tr:hover {
+    background-color: #8a522b;
+    transform: translateY(-5px);
+}
+
+/* Table Data Styling */
+#complaintTable td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 1em;
+}
+
+/* Status Column Styling */
+#complaintTable td:last-child {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+#complaintTable td:nth-child(9) {
+    color: #ff9800;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+/* Odd Row Styling */
+#complaintTable tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Table Border Animation */
+#complaintTable th, #complaintTable td {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Hover effect on rows */
+#complaintTable tbody tr:hover {
+    background-color: #ffe082;
+    transform: translateY(-5px);
+}
+
+/* Animation Effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes textPopUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tablePopUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    #complaintTable th, #complaintTable td {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+}
